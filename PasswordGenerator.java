@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+// https://www.mkyong.com/java/java-password-generator-example/
+
 public class PasswordGenerator {
 	
 	  private static final String CHAR_LOWER = "abcdefghijklmnopqrstuvwxyz";
