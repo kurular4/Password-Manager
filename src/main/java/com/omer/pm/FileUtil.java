@@ -1,7 +1,6 @@
-
+package com.omer.pm;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 public class FileUtil {
@@ -131,8 +130,7 @@ public class FileUtil {
     
     public static boolean exists(String path) {
     	File tempFile = new File(path);
-    	boolean exists = tempFile.exists();
-    	return exists;
+        return tempFile.exists();
     }
     
     public static boolean delete(String path) throws IOException {

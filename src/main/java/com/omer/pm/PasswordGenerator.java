@@ -1,3 +1,5 @@
+package com.omer.pm;
+
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +23,7 @@ public class PasswordGenerator {
 	    private static final String PASSWORD_ALLOW_BASE_SHUFFLE = shuffleString(PASSWORD_ALLOW_BASE);
 	    private static final String PASSWORD_ALLOW = PASSWORD_ALLOW_BASE_SHUFFLE;
 
-	    private static SecureRandom random = new SecureRandom();
+	    private static final SecureRandom random = new SecureRandom();
 	   
 	    public static String generateRandomPassword(int length) {
 	        if (length < 1) throw new IllegalArgumentException();
@@ -40,6 +42,6 @@ public class PasswordGenerator {
 	    public static String shuffleString(String string) {
 	        List<String> letters = Arrays.asList(string.split(""));
 	        Collections.shuffle(letters);
-	        return letters.stream().collect(Collectors.joining());
+	        return String.join("", letters);
 	    }
 }

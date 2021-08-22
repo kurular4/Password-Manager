@@ -1,19 +1,15 @@
+package com.omer.pm;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.*;
-
-import javax.crypto.SecretKey;
 
 public class Main {
 	
@@ -53,7 +49,7 @@ public class Main {
 		}
 		
         key = passwordVerify;
-		aes.setKey(key);
+		AES.setKey(key);
 		
 		while(true) {
 			System.out.println("Pick an option to go");
@@ -95,8 +91,7 @@ public class Main {
 		Scanner k = new Scanner(System.in);		
 		System.out.println("Enter desired password length");
 		int length = k.nextInt();
-		PasswordGenerator pg = new PasswordGenerator();
-		String generatedpassword = pg.generateRandomPassword(length);
+		String generatedpassword = PasswordGenerator.generateRandomPassword(length);
 		System.out.println(generatedpassword);
 	}
 
@@ -195,10 +190,7 @@ public class Main {
 		int selectedIndex = k.nextInt();
 		
 		bufferedReader = FileUtil.read(path);
-	    
-		
 
-		line = null;
 		int count = 1;
 		
 		while((line = bufferedReader.readLine()) != null && count <= index) {
@@ -206,11 +198,7 @@ public class Main {
 	        	String entry = list.get(count - 1)[0] + "!" + list.get(count - 1)[1] + "!" + list.get(count - 1)[2];
 	        	System.out.println(entry);
 	        	String encrypted = aes.encrypt(entry,  key);
-	        	if(count == 1) {
-	        		FileUtil.write(encrypted, path, false);
-	        	} else {
-	        		FileUtil.write(encrypted, path, true);
-	        	}
+				FileUtil.write(encrypted, path, count != 1);
 			}
 			
 			count++;
@@ -317,9 +305,8 @@ public class Main {
     	byte[] data = new byte[(int) file.length()];
     	fis.read(data);
     	fis.close();
-    	String str = new String(data, "UTF-8");
-    	String mac = HMAC.calculateHMAC(str, key);
-    	return mac;
+    	String str = new String(data, StandardCharsets.UTF_8);
+		return HMAC.calculateHMAC(str, key);
     }
     
     private static void updateHMAC(String hmac) throws IOException {
@@ -374,17 +361,11 @@ public class Main {
     			
 		bufferedReader = FileUtil.read(path);
 
-		line = null;
-		
 		int count = 1;
 		
 		for(String linet : list) {
         	String encrypted = aes.encrypt(linet,  key);
-        	if(count == 1) {
-        		FileUtil.write(encrypted, path, false);
-        	} else {
-        		FileUtil.write(encrypted, path, true);
-        	}
+			FileUtil.write(encrypted, path, count != 1);
         	count++;
 		}
 		
@@ -412,8 +393,6 @@ public class Main {
     			
 		bufferedReader = FileUtil.read(path);
 
-		line = null;
-		
 		int count = 1;
 		
 		for(String linet : list) {
