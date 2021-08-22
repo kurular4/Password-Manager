@@ -11,6 +11,7 @@ import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.*;
 
+// TODO NEEDS A COMPLETE REFACTOR
 public class Main {
 	
 	private static AES aes;
